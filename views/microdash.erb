@@ -34,6 +34,19 @@ document.addEventListener('DOMContentLoaded', function () {
     var gearTextX = rpmWidth + 15; // Position the gear text 5 pixels to the right of the bar
     ctx.fillText(data.gear > 10 ? '...' : data.gear, gearTextX, 35); // Adjust the y position to vertically center the text
 
+    // Set font style for race status
+    ctx.font = 'bold 40px Arial'; // Set font style to bold, size to 40px, and family to Arial
+    ctx.fillStyle = 'black'; // Set text color to black
+    ctx.textAlign = 'center'; // Align text to the center
+    ctx.textBaseline = 'bottom'; // Vertically align text to the bottom
+
+    // Calculate the y position for the race status text
+    var raceStatusY = canvas.height - 20; // Position the text 20 pixels from the bottom of the canvas
+
+    // Draw the race status text
+    ctx.fillText(data.is_race_on ? 'Race On' : 'Race Off', canvas.width / 2, raceStatusY);
+
+
 
  };
 });

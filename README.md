@@ -44,7 +44,6 @@ Currently, the project will allow you to:
 		- Drivetrain
 		- Engine Format
 3) Use aux IP finder methods to get IP listing from local machine
-4) Convert JSON-format TXT docs to hash in external Ruby File
 
 # Technical Notes
 
@@ -53,3 +52,17 @@ This project uses:
 2) Faye/Websocket for websocket/UDP
 3) JSON formatted data for web-viewer
 4) Canvas for browser rendering (I'm thinking of using Svelte or p5.js instead)
+
+# TODO
+
+- Send signal to browser dash to refresh DOM when race status toggles to off - and provide a "no race" msg
+	- The issue is that while the static data variables are correctly updated, the DOM is not re-painted.
+- Build lookup system for tracks / update view renderer to show track info at top of screen.
+- Finish method comments in CarInfo
+- Build utility to add new cars / tracks to json files (probably an alternate view + navigation button from dash)
+- Start over/under steer analysis module (using delta of average of tire_slip_angle(s), front and rear -- consider using yaw data to compare)
+- Start suspension bottom-out warning indicator (and display for max values)
+- Add current/best lap time + race position display to canvas
+	- display all laps / calcuated splits
+	- enable a "personal best" save file + split from best display (maybe SQLite?)
+- Experiment with logging / saving race session data
