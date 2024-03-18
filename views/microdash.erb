@@ -5,7 +5,7 @@
   <title>FORZA MOTORSPORT DASHBOARD</title>
   <script>
 document.addEventListener('DOMContentLoaded', function () {
- var ws = new WebSocket('ws://10.0.0.145:4567/websocket'); // THIS NEEDS TO BY DYNAMIC - PROB USE IPFINDER
+ var ws = new WebSocket('ws://10.0.0.145:4567/websocket'); // THIS NEEDS TO BE DYNAMIC - PROB USE IPFINDER
  var canvas = document.getElementById('myCanvas');
  var ctx = canvas.getContext('2d');
 
@@ -113,10 +113,6 @@ document.addEventListener('DOMContentLoaded', function () {
 </head>
 
 <body>
-  <h1>FORZA MOTORSPORT DASHBOARD</h1>
-  <button onclick="toggleFullscreen()">Toggle Fullscreen</button>
-  <canvas id="myCanvas" width="1000" height="500"></canvas>
-
   <script>
     function toggleFullscreen() {
       if (document.fullscreenElement || document.webkitFullscreenElement) {
@@ -143,6 +139,45 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
   </script>
+
+  <h1>FORZA MOTORSPORT DASHBOARD</h1>
+  <div>
+    <% @static_data.each do |key, value| %>
+    <% if key == :"Track Ordinal" %>
+      <tr>
+          <td>
+            <%= value[0] %>
+            <%= ' : ' %>
+            <%= value[1] %>
+            <%= ' - ' %>
+            <%= value[2] %>
+
+
+          </td>
+      </tr>
+      <div>
+      <tr>
+          <td>
+            <%= 'Track Layout:' %>
+            <%= value[3] %>
+          </td>
+      </tr>
+      </div>
+      <div>
+      <tr>
+          <td>
+            <%= 'Track Length:' %>
+            <%= value[4] %>
+            <%= 'Km' %>
+          </td>
+      </tr>
+      </div>
+    <% end %>
+  <% end %>
+  </div>
+
+  <canvas id="myCanvas" width="1000" height="500"></canvas>
+
   <table>
   <% @static_data.each do |key, value| %>
     <% if key == :"Car Ordinal" %>
@@ -152,6 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <%= value[0] %> <%= value[1] %> <%= value[2] %>
           </td>
       </tr>
+    <% elsif key == :"Track Ordinal" %>
     <% else %>
         <tr>
           <td><%= key %></td>
@@ -161,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function () {
   <% end %>
   </table>
 
-
+<button onclick="toggleFullscreen()">Toggle Fullscreen</button>
 </body>
 
 </html>

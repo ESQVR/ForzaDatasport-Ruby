@@ -27,7 +27,7 @@ module CarInfo
   end
 
   # Ensures external list file is loaded when modulue is first loaded
-  load_and_merge_list('car_list.json')
+  load_and_merge_list('lib/data/car_list.json')
 
   # Returns array of strings with :year, :make, :model info for current car
   def car_lookup(ordinal)
@@ -56,4 +56,6 @@ module CarInfo
     }
     conversion.keys.include?(num) ? conversion[num] : 'Error: Invalid drive type'
   end
+
+  # TODO: ADD method for calling file writing class to modify external file (add or modify car list)
 end

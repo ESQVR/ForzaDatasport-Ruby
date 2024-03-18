@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'car_info'
+require_relative 'track_info'
 
 # Module: FMDOParser
 #
@@ -41,7 +42,7 @@ module FMDOParser # rubocop:disable Metrics/ModuleLength
       is_race_on: parse_dashdata(data, 0, 4, 'l'),
       timestamp_ms: parse_dashdata(data, 4, 4, 'L'),
 
-      # engine_max_rpm: parse_dashdata(data, 8, 4, 'e'), <-- static value (only needed once per race)
+      engine_max_rpm: parse_dashdata(data, 8, 4, 'e'),
       # engine_idle_rpm: parse_dashdata(data, 12, 4, 'e'), <-- static value
 
       current_engine_rpm: parse_dashdata(data, 16, 4, 'e'),
@@ -165,7 +166,7 @@ module FMDOParser # rubocop:disable Metrics/ModuleLength
       "Car PI": parse_dashdata(data, 220, 4, 'l'),
       "Drivetrain": convert_drive(parse_dashdata(data, 224, 4, 'l')), # converted to readable string
       "Cylinders": parse_dashdata(data, 228, 4, 'l'),
-      "Track Ordinal": parse_dashdata(data, 327, 4, 'l'),
+      "Track Ordinal": track_lookup(parse_dashdata(data, 327, 4, 'l')),
       "Max RPM": parse_dashdata(data, 8, 4, 'e').round(0), # rounded to whole number
       "Idle RPM": parse_dashdata(data, 12, 4, 'e').round(0) # rounded to whole number
     }
