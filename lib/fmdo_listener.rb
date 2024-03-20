@@ -2,8 +2,6 @@
 
 require_relative 'ip_finder'
 require_relative 'parser_module'
-require_relative 'car_info'
-require_relative 'track_info'
 require 'logger'
 
 # Forza Motorsport Data Out (FMDO) Listener -
@@ -12,8 +10,6 @@ require 'logger'
 # UDP binary is parsed using parser_module into @udp_data hash for easy access.
 class FMDOListener
   include FMDOParser
-  include CarInfo
-  include TrackInfo
 
   attr_reader :udp_data, :my_ip, :static_data
 

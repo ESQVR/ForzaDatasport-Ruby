@@ -21,6 +21,7 @@ require_relative 'track_info'
 #     - Format: CAR_LIST[ordinal] => [CAR_LIST[:year], CAR_LIST[:make], CAR_LIST[:model]].
 module FMDOParser # rubocop:disable Metrics/ModuleLength
   include CarInfo
+  include TrackInfo
   # Returns unpacked values from UDP datagrams
   #
   # Arguments:
