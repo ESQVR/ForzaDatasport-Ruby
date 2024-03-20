@@ -47,13 +47,9 @@ module CarInfo
     conversion.keys.include?(num) ? conversion[num] : 'Error: Invalid Class ID Number'
   end
 
-  # Converts drivetrain-type integers into readable class letters for display
+  # Converts drivetrain-type integers into readable drivetrain labels for display
   def convert_drive(num)
-    conversion = {
-      0 => 'FWD',
-      1 => 'RWD',
-      2 => 'AWD'
-    }
+    conversion = { 0 => 'FWD', 1 => 'RWD', 2 => 'AWD' }
     conversion.keys.include?(num) ? conversion[num] : 'Error: Invalid drive type'
   end
 

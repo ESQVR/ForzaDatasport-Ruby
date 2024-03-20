@@ -28,9 +28,9 @@ class FMDOListener
   private
 
   # Initialize a new Thread that initializes a UDPSocket, binds it to the IP selected by IPFinder
-  # Static Data (Car ID, PI, Drivetrain / Track Info) is extracted and parsed (and logged) once
-  # Thread continues to update @udp_data with every 331 bytes received from FM Data Out stream
-  # Checks to see if race is on, and toggles static_data_sent when race is false, to induce refresh.
+  # - Static Data (Car ID, PI, Drivetrain / Track Info) is extracted and parsed (and logged) once
+  # - Thread continues to update @udp_data with every 331 bytes received from FM Data Out stream
+  # - Checks to see if race is on, and toggles static_data_sent when race is false, to induce refresh.
   def spawn_udp_receive_thread # rubocop:disable Metrics/MethodLength
     Thread.new do
       udp = UDPSocket.new

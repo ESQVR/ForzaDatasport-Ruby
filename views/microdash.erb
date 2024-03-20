@@ -4,110 +4,50 @@
 <head>
   <title>FORZA MOTORSPORT DASHBOARD</title>
   <script>
-document.addEventListener('DOMContentLoaded', function () {
- var ws = new WebSocket('ws://10.0.0.145:4567/websocket'); // THIS NEEDS TO BE DYNAMIC - PROB USE IPFINDER
- var canvas = document.getElementById('myCanvas');
- var ctx = canvas.getContext('2d');
+    document.addEventListener('DOMContentLoaded', function () {
+      var ws = new WebSocket('ws://10.0.0.145:4567/websocket'); // TODO: THIS NEEDS TO BE DYNAMIC - PROB USE IPFINDER
+      var canvas = document.getElementById('myCanvas');
+      var ctx = canvas.getContext('2d');
 
- ws.onmessage = function (event) {
-    var data = JSON.parse(event.data);
+      ws.onmessage = function (event) {
+          var data = JSON.parse(event.data);
 
-    // Clear the canvas before drawing new data
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+          // Clear the canvas before drawing new data
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Example: Draw a rectangle representing the current engine RPM
-    var rpmWidth = data.current_engine_rpm * 0.08; // Scale the RPM to a width
-    ctx.fillStyle = data.current_engine_rpm > 7900 ? 'red' : 'green'; // Color based on RPM
-    ctx.fillRect(10, 10, rpmWidth, 50); // Draw the rectangle
+          // TODO: Dynamically calculate either shift point
+          // Draw a rectangle representing the current engine RPM
+          var rpmWidth = data.current_engine_rpm * 0.08; // Scale the RPM to a width
+          ctx.fillStyle = data.current_engine_rpm > 7900 ? 'red' : 'green'; // Shift Indicator color change (THIS NEEDS EDITS)
+          ctx.fillRect(10, 10, rpmWidth, 50); // Draw the rectangle
 
-    // Draw text for engine current RPM
-    ctx.fillStyle = 'rgba(58, 58, 58, 1)'; // Set text color to white
-    ctx.font = 'italic 700 60px Gill Sans'; // Set font style to italic, weight to 700, size to 50px, and family to Gill Sans
-    ctx.textAlign = 'left'; // Align text to the left
-    ctx.textBaseline = 'middle'; // Vertically align text to the middle
-    ctx.fillText(data.current_engine_rpm.toFixed(0), 10, 40); // Adjust the y position to vertically center the text
+          // Draw text for engine current RPM
+          ctx.fillStyle = 'rgba(58, 58, 58, 1)'; // Set text color to white
+          ctx.font = 'italic 700 60px Gill Sans'; // Set font style to italic, weight to 700, size to 50px, and family to Gill Sans
+          ctx.textAlign = 'left'; // Align text to the left
+          ctx.textBaseline = 'middle'; // Vertically align text to the middle
+          ctx.fillText(data.current_engine_rpm.toFixed(0), 10, 40); // Adjust the y position to vertically center the text
 
-    // Draw text for gear value to the right of the bar, moving along with the bar
-    ctx.fillStyle = data.current_engine_rpm > 7900 ? 'red' : 'green';
-    ctx.textAlign = 'left'; // Align text to the left
-    ctx.textBaseline = 'middle'; // Vertically align text to the middle
-    var gearTextX = rpmWidth + 15; // Position the gear text 5 pixels to the right of the bar
-    ctx.fillText(data.gear > 10 ? '...' : data.gear, gearTextX, 35); // Adjust the y position to vertically center the text
+          // Draw text for gear value to the right of the bar, moving along with the bar
+          ctx.fillStyle = data.current_engine_rpm > 7900 ? 'red' : 'green';
+          ctx.textAlign = 'left'; // Align text to the left
+          ctx.textBaseline = 'middle'; // Vertically align text to the middle
+          var gearTextX = rpmWidth + 15; // Position the gear text 5 pixels to the right of the bar
+          ctx.fillText(data.gear > 10 ? '...' : data.gear, gearTextX, 35); // Adjust the y position to vertically center the text
 
-    // Set font style for race status
-    ctx.font = 'bold 40px Arial'; // Set font style to bold, size to 40px, and family to Arial
-    ctx.fillStyle = 'black'; // Set text color to black
-    ctx.textAlign = 'center'; // Align text to the center
-    ctx.textBaseline = 'bottom'; // Vertically align text to the bottom
+          // Set font style for race status
+          ctx.font = 'bold 40px Arial'; // Set font style to bold, size to 40px, and family to Arial
+          ctx.fillStyle = 'black'; // Set text color to black
+          ctx.textAlign = 'center'; // Align text to the center
+          ctx.textBaseline = 'bottom'; // Vertically align text to the bottom
 
-    // Calculate the y position for the race status text
-    var raceStatusY = canvas.height - 20; // Position the text 20 pixels from the bottom of the canvas
+          // Calculate the y position for the race status text
+          var raceStatusY = canvas.height - 20; // Position the text 20 pixels from the bottom of the canvas
 
-    // Draw the race status text
-    ctx.fillText(data.is_race_on ? 'Race On' : 'Race Off', canvas.width / 2, raceStatusY);
-
-
-
- };
-});
-
-
-    // document.addEventListener('DOMContentLoaded', function () {
-    //   var ws = new WebSocket('ws://10.0.0.145:4567/websocket');
-
-    //   ws.onmessage = function (event) {
-    //     var data = JSON.parse(event.data);
-
-    //     // Update the page content with the new data
-    //     document.getElementById('engineMaxRpm').textContent = data.engine_max_rpm.toFixed(2);
-    //     document.getElementById('engineIdleRpm').textContent = data.engine_idle_rpm.toFixed(2);
-    //     document.getElementById('currentEngineRpm').textContent = data.current_engine_rpm.toFixed(2);
-    //     document.getElementById('colorBox').style.width = data.current_engine_rpm * .005 + "%";
-
-    //     if (data.current_engine_rpm > 7800) {
-    //     document.getElementById('colorBox').style.backgroundColor = 'red';
-    //     }
-
-    //     if (data.current_engine_rpm < 7700) {
-    //     document.getElementById('colorBox').style.backgroundColor = 'green';
-    //     }
-
-    //     // Continue with the rest of the variables
-
-
-    //     document.getElementById('carOrdinal').textContent = data.car_ordinal;
-    //     document.getElementById('carClass').textContent = data.car_class;
-    //     document.getElementById('carPerformanceIndex').textContent = data.car_performance_index;
-    //     document.getElementById('drivetrainType').textContent = data.drivetrain_type;
-    //     document.getElementById('numCylinders').textContent = data.num_cylinders;
-
-    //     document.getElementById('positionX').textContent = data.position_x.toFixed(2);
-    //     document.getElementById('positionY').textContent = data.position_y.toFixed(2);
-    //     document.getElementById('positionZ').textContent = data.position_z.toFixed(2);
-    //     document.getElementById('speed').textContent = data.speed.toFixed(2);
-    //     document.getElementById('power').textContent = data.power.toFixed(2);
-    //     document.getElementById('torque').textContent = data.torque.toFixed(2);
-
-    //     document.getElementById('boost').textContent = data.boost.toFixed(2);
-    //     document.getElementById('fuel').textContent = data.fuel.toFixed(2);
-    //     document.getElementById('distanceTraveled').textContent = data.distance_traveled.toFixed(2);
-    //     document.getElementById('bestLap').textContent = data.best_lap.toFixed(2);
-    //     document.getElementById('lastLap').textContent = data.last_lap.toFixed(2);
-    //     document.getElementById('currentLap').textContent = data.current_lap.toFixed(2);
-    //     document.getElementById('currentRaceTime').textContent = data.current_race_time.toFixed(2);
-
-    //     document.getElementById('lapNumber').textContent = data.lap_number;
-    //     document.getElementById('racePosition').textContent = data.race_position;
-    //     document.getElementById('accel').textContent = data.accel;
-    //     document.getElementById('brake').textContent = data.brake;
-    //     document.getElementById('clutch').textContent = data.clutch;
-    //     document.getElementById('handBrake').textContent = data.hand_brake;
-    //     document.getElementById('gear').textContent = data.gear;
-    //     document.getElementById('steer').textContent = data.steer;
-
-    //     document.getElementById('trackOrdinal').textContent = data.track_ordinal;
-    //   };
-    // });
+          // Draw the race status text
+          ctx.fillText(data.is_race_on ? 'Race On' : 'Race Off', canvas.width / 2, raceStatusY);
+        };
+    });
   </script>
   <link rel="stylesheet" type="text/css" href="/styles/index.css">
 </head>

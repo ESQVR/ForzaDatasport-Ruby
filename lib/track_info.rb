@@ -2,6 +2,8 @@
 
 require 'json'
 
+# TODO: FINISH WRITING MODULE DESCRIPTION
+
 # Module: TrackInfo
 #
 # TrackInfo reads track information data from an external file and makes this available to FMDOListener
@@ -24,6 +26,7 @@ module TrackInfo # rubocop:disable Metrics/ModuleLength
     track_info = TRACK_LIST[ordinal.to_s.to_sym]
     return "Track Ordinal #{ordinal} is not in data file. Please Update" if track_info.nil?
 
+    # Current list of IOC codes - source: https://en.wikipedia.org/wiki/List_of_IOC_country_codes
     ioc_hash = {
       'afg' => 'Afghanistan',
       'alb' => 'Albania',
